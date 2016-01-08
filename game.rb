@@ -10,4 +10,7 @@ class Game
     @board.reveal
   end
 
+  def bfs
+  end
+
 end

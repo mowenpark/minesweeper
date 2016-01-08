@@ -16,17 +16,19 @@ class Board
 
   def populate(bombs = 10)
     @grid.flatten.sample(bombs).each do |tile|
-      tile.bomb = true
+      tile.set_bomb # sets bomb to true
     end
   end
 
   def reveal(pos)
     return "bomb" if self[pos].bomb == true
+
   end
 
 
 
   def display
+
   end
 
 end
