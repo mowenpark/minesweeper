@@ -1,7 +1,7 @@
 class Board
+
   def initialize
     @grid = Array.new(9) {Array.new(9) {Tile.new}}
-
   end
 
   def [](pos)
@@ -19,4 +19,14 @@ class Board
       tile.bomb = true
     end
   end
+
+  def reveal(pos)
+    return "bomb" if self[pos].bomb == true
+  end
+
+
+
+  def display
+  end
+
 end
