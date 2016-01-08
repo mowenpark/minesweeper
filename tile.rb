@@ -7,6 +7,7 @@ class Tile
     @value = nil
     @parent = nil
     @children = []
+    @flagged = false
   end
 
   def children
@@ -23,6 +24,14 @@ class Tile
 
   def set_value(kid_bombs)
     @value = kid_bombs
+  end
+
+  def reveal_tile
+    if @revealed == true || @flagged == true
+      puts "Tile is already revealed."
+      return
+    end
+    @revealed = true
   end
 
   def parent=(new_parent)
