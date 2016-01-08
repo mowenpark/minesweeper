@@ -31,18 +31,23 @@ class Board
     end
   end
 
-  def reveal(pos)
-    return "bomb" if self[pos].bomb == true
-    self[pos].reveal_tile
-  end
+  # def reveal(pos)
+  #   return "bomb" if self[pos].bomb == true #end game if the tile is a bomb
+  #   self[pos].reveal_tile
+  # end
 
   def bfs(pos)
     queue = [self[pos]]
 
-    current_tile = queue.shift
+    until queue.empty?
+      current_tile = queue.shift
+      current_tile.reveal_tile
 
-    unless current_tile.revealed
-      
+      current_tile
+    end
+
+    # unless current_tile.revealed
+
 
   end
 
@@ -62,7 +67,24 @@ class Board
     valid_moves
   end
 
+  def assign_children(pos)
+    bombs = 0
+    possible_moves(pos).each do |child_pos|
+      if self[child_pos].bomb == true
+        bombs += 1
+      end
+    end
 
+    return self[pos].value = bombs if bombs > 0
+
+    children = possible_moves(pos).select do |child_pos|
+      self[child_pos].flagged == false && self[child_pos].revealed == false
+    end
+
+    children.each do |kid|
+      self[pos].add_child(self[kid])
+    end
+  end
 
   def display
 

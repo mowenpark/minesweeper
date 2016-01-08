@@ -1,5 +1,5 @@
 class Tile
-  attr_reader :parent, :value, :revealed, :bomb
+  attr_reader :parent, :value, :revealed, :bomb, :flagged
 
   def initialize
     @bomb = false
@@ -32,6 +32,7 @@ class Tile
       return
     end
     @revealed = true
+
   end
 
   def parent=(new_parent)
