@@ -11,10 +11,6 @@ class Tile
   end
 
   def children
-    # We dup to avoid someone inadvertently trying to modify our
-    # children directly through the children array. Note that
-    # `parent=` works hard to make sure children/parent always match
-    # up. We don't trust our users to do this.
     @children.dup
   end
 
@@ -28,7 +24,7 @@ class Tile
 
   def reveal_tile
     if @revealed == true || @flagged == true
-      puts "Tile is already revealed."
+      puts "Tile is already revealed or is flagged."
       return
     end
     @revealed = true
@@ -60,6 +56,10 @@ class Tile
     # _children.delete(old_child) if _children.include?(old_child)
     old_child.parent = nil
   end
+
+  # def inspect
+  #   @bomb
+  # end
 
   protected
   # Protected method to give a node direct access to another node's

@@ -31,6 +31,14 @@ class Board
     end
   end
 
+  def find_tile_pos(tile)
+    (0...8).each do |row|
+      (0...8).each do |col|
+        return [row,col] if self[[row,col]] == tile
+      end
+    end
+  end
+
   # def reveal(pos)
   #   return "bomb" if self[pos].bomb == true #end game if the tile is a bomb
   #   self[pos].reveal_tile
@@ -41,16 +49,19 @@ class Board
 
     until queue.empty?
       current_tile = queue.shift
-      current_tile.reveal_tile
-
-      current_tile
+      unless current_tile.bomb
+        current_tile.reveal_tile
+        current_pos = find_tile_pos(current_tile)
+        self.assign_children(current_pos) # add children to current_tile
+        current_tile.children.each do |child|
+          queue.push(child)
+        end
+      end
     end
-
-    # unless current_tile.revealed
-
 
   end
 
+    # unless current_tile.revealed
   def possible_moves(pos)
     valid_moves = []
 
@@ -75,7 +86,11 @@ class Board
       end
     end
 
-    return self[pos].value = bombs if bombs > 0
+    if bombs > 0
+      self[pos].set_value(bombs)
+      return
+    end
+
 
     children = possible_moves(pos).select do |child_pos|
       self[child_pos].flagged == false && self[child_pos].revealed == false
@@ -87,7 +102,23 @@ class Board
   end
 
   def display
-
+    
+    # display = Array.new(9) {Array.new(9) }
+    # display.flatten.each_with_index do |pos, index|
+    #   display[index] = @grid.flatten[index].value
+    # end
+    # display
   end
 
 end
+
+
+
+
+
+      # pos = []
+# array.each_with_index do |row, row_index|
+  # if row.include?(tile)
+  #   pos << row_index
+  #   row.each_with_index do |tile, col_idx|
+  #     if tile == tile
