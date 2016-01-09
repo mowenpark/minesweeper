@@ -11,6 +11,8 @@ class Board
     [-1,-1]
   ]
 
+  attr_reader :grid
+
   def initialize
     @grid = Array.new(9) {Array.new(9) {Tile.new}}
   end
@@ -102,7 +104,7 @@ class Board
   end
 
   def display
-    
+    @grid
     # display = Array.new(9) {Array.new(9) }
     # display.flatten.each_with_index do |pos, index|
     #   display[index] = @grid.flatten[index].value

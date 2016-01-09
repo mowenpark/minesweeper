@@ -10,6 +10,16 @@ class Tile
     @flagged = false
   end
 
+  def inspect
+    if @revealed == false
+      "[]"
+    elsif @flagged == true
+      "|>"
+    else
+      "#{@value}"
+    end
+  end
+
   def children
     @children.dup
   end
